@@ -24,6 +24,7 @@
   "homepage": "https://github.com/adamlofting/transformtogeckoboard",
   "dependencies": {
     "express": "~4.6.1",
-    "node-cache": "~1.0.0"
+    "node-cache": "~1.0.0",
+    "request": "~2.37.0"
   }
 }
