@@ -65,7 +65,7 @@ app.get(mp_hosts, function(req, res) {
 
 var mp_attendees = '/makerparty/attendees';
 app.get(mp_attendees, function(req, res) {
-  makerPartySingleNumber(res, mp_attendees, 'attendees');
+  makerPartySingleNumber(res, mp_attendees, 'estimatedAttendees');
 });
 
 var mp_events = '/makerparty/events';
