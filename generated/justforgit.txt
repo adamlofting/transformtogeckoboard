@@ -1,0 +1,1 @@
+This file exists to add the 'generated' folder to git, so it can be pushed to heroku.
