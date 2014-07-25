@@ -49,12 +49,15 @@ app.get('/appmaker/mostactiveusers', function(req, res) {
   appmaker.mostActiveUsers(res);
 });
 
-// Periodically update the Appmaker Stats
-var UPDATE_FREQUENCY_MINS = 10;
-setInterval(appmaker.refreshStats, UPDATE_FREQUENCY_MINS * 60 * 1000);
-
 
 var port = Number(process.env.PORT || 5000);
 app.listen(port, function() {
   console.log("Listening on " + port);
 });
+
+
+// Periodically update the Appmaker Stats
+var UPDATE_FREQUENCY_MINS = 10;
+setInterval(appmaker.refreshStats, UPDATE_FREQUENCY_MINS * 60 * 1000);
+// Run this once right away
+appmaker.refreshStats();
