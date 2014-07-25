@@ -45,11 +45,13 @@ app.get(mp_coorganizers, function(req, res) {
 });
 
 // APPMAKER
-var appmaker_test = '/appmaker/test';
-app.get(appmaker_test, function(req, res) {
-  appmaker.test(res, appmaker_test, 'coorganizers');
+app.get('/appmaker/mostactiveusers', function(req, res) {
+  appmaker.mostActiveUsers(res);
 });
 
+// Periodically update the Appmaker Stats
+var UPDATE_FREQUENCY_MINS = 10;
+setInterval(appmaker.refreshStats, UPDATE_FREQUENCY_MINS * 60 * 1000);
 
 
 var port = Number(process.env.PORT || 5000);
