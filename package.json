@@ -29,6 +29,7 @@
     "makeapi-client": "git://github.com/mozilla/makeapi-client",
     "async": "~0.9.0",
     "googleapis": "~1.0.2",
-    "nodealytics": "0.0.6"
+    "nodealytics": "0.0.6",
+    "http-auth": "~2.1.8"
   }
 }
