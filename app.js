@@ -1,6 +1,8 @@
 var express = require('express');
 var makerparty = require('./lib/makerparty');
 var appmaker = require('./lib/appmaker');
+var ga = require('./lib/googleanalytics');
+var auth = require('http-auth');
 
 var app = express();
 
@@ -49,6 +51,59 @@ app.get('/appmaker/mostactiveusers', function(req, res) {
   appmaker.mostActiveUsers(res);
 });
 
+app.get('/appmaker/topevents', function(req, res) {
+  appmaker.topEvents(res);
+});
+
+app.get('/appmaker/topbricks', function(req, res) {
+  appmaker.topBricks(res);
+});
+
+app.get('/appmaker/topremixes', function(req, res) {
+  appmaker.topRemixes(res);
+});
+
+// AUTH LOCAL
+var basic = auth.basic({
+        realm: "Web."
+    }, function (username, password, callback) { // Custom authentication method.
+        callback(username === process.env.ADMIN_USERNAME && password === process.env.ADMIN_PASSWORD);
+    }
+);
+
+// while there's no homepage, redirect to this
+app.get('/', function (req, res) {
+  res.redirect('/ga/auth');
+});
+
+// GA AUTH
+app.get('/ga/auth', auth.connect(basic), function (req, res) {
+  ga.getAccessToken(function (err, url) {
+    res.redirect(url);
+  });
+});
+
+app.get('/ga/oauth2callback', auth.connect(basic), function (req, res) {
+  var code = req.param('code');
+  if (!code) {
+    res.json({'Error':'Missing authentication code from GA redirect'});
+    return;
+  }
+
+  ga.getLatestData(code, function (err, response) {
+    if (err) {
+      res.json({"Error": err});
+      return;
+    }
+    console.log('Got latest GA data');
+    res.redirect('/ga/done');
+  });
+});
+
+app.get('/ga/done', auth.connect(basic), function (req, res) {
+  res.send('Done<br><a href="/ga/auth/">Again</a>');
+});
+
 
 var port = Number(process.env.PORT || 5000);
 app.listen(port, function() {
@@ -57,7 +112,6 @@ app.listen(port, function() {
 
 
 // Periodically update the Appmaker Stats
-var UPDATE_FREQUENCY_MINS = 10;
-setInterval(appmaker.refreshStats, UPDATE_FREQUENCY_MINS * 60 * 1000);
+setInterval(appmaker.refreshStats, process.env.UPDATE_FREQUENCY_MINS * 60 * 1000);
 // Run this once right away
 appmaker.refreshStats();
