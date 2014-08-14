@@ -78,7 +78,7 @@ app.get('/', function (req, res) {
 
 // GA AUTH
 app.get('/ga/auth', auth.connect(basic), function (req, res) {
-  ga.getAccessToken(function (err, url) {
+  ga.getAuthURL(function (err, url) {
     res.redirect(url);
   });
 });
@@ -90,12 +90,12 @@ app.get('/ga/oauth2callback', auth.connect(basic), function (req, res) {
     return;
   }
 
-  ga.getLatestData(code, function (err, response) {
+  ga.updateAuthTokens(code, function (err, response) {
     if (err) {
       res.json({"Error": err});
       return;
     }
-    console.log('Got latest GA data');
+    console.log('Updated Auth Tokens');
     res.redirect('/ga/done');
   });
 });
@@ -111,7 +111,10 @@ app.listen(port, function() {
 });
 
 
-// Periodically update the Appmaker Stats
+// Periodically update the Appmaker MakeAPI Stats
 setInterval(appmaker.refreshStats, process.env.UPDATE_FREQUENCY_MINS * 60 * 1000);
 // Run this once right away
 appmaker.refreshStats();
+// Periodically update the GA Stats
+setInterval(ga.getLatestData, process.env.UPDATE_FREQUENCY_MINS * 60 * 1000);
+ga.getLatestData();
