@@ -1,6 +1,7 @@
 var express = require('express');
 var makerparty = require('./lib/makerparty');
 var appmaker = require('./lib/appmaker');
+var eoy = require('./lib/eoy');
 var ga = require('./lib/googleanalytics');
 var auth = require('http-auth');
 
@@ -63,6 +64,21 @@ app.get('/appmaker/topremixes', function(req, res) {
   appmaker.topRemixes(res);
 });
 
+// EOY
+app.get('/eoy/donationsbycountry', function(req, res) {
+  eoy.EOYDonationsByCountry(res);
+});
+
+app.get('/eoy/donationsbycontinent', function(req, res) {
+  eoy.EOYDonationsByContinent(res);
+});
+
+app.get('/eoy/donationsbysource', function(req, res) {
+  eoy.EOYDonationsBySource(res);
+});
+
+
+
 // AUTH LOCAL
 var basic = auth.basic({
         realm: "Web."
@@ -96,6 +112,7 @@ app.get('/ga/oauth2callback', auth.connect(basic), function (req, res) {
       return;
     }
     console.log('Updated Auth Tokens');
+    ga.getLatestData();
     res.redirect('/ga/done');
   });
 });
