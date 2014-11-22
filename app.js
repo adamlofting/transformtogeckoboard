@@ -11,6 +11,12 @@ var app = express();
  * ROUTES
  */
 
+app.all('*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+ });
+
 // MAKER PARTY
 var mp_hosts = '/makerparty/hosts';
 app.get(mp_hosts, function(req, res) {
@@ -75,6 +81,18 @@ app.get('/eoy/donationsbycontinent', function(req, res) {
 
 app.get('/eoy/donationsbysource', function(req, res) {
   eoy.EOYDonationsBySource(res);
+});
+
+app.get('/eoy/transactionsbycountry', function(req, res) {
+  eoy.EOYTransactionsByCountry(res);
+});
+
+app.get('/eoy/transactionsbycontinent', function(req, res) {
+  eoy.EOYTransactionsByContinent(res);
+});
+
+app.get('/eoy/transactionsbysource', function(req, res) {
+  eoy.EOYTransactionsBySource(res);
 });
 
 
