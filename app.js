@@ -151,5 +151,5 @@ setInterval(appmaker.refreshStats, process.env.UPDATE_FREQUENCY_MINS * 60 * 1000
 // Run this once right away
 appmaker.refreshStats();
 // Periodically update the GA Stats
-setInterval(ga.getLatestData, process.env.UPDATE_FREQUENCY_MINS * 60 * 1000);
-ga.getLatestData();
+// setInterval(ga.getLatestData, process.env.UPDATE_FREQUENCY_MINS * 60 * 1000);
+// ga.getLatestData();
