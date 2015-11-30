@@ -71,25 +71,25 @@ app.get('/appmaker/topremixes', function(req, res) {
 });
 
 // EOY
-app.get('/eoy/donationsbycountry', function(req, res) {
-  eoy.EOYDonationsByCountry(res);
-});
+// app.get('/eoy/donationsbycountry', function(req, res) {
+//   eoy.EOYDonationsByCountry(res);
+// });
 
-app.get('/eoy/donationsbycontinent', function(req, res) {
-  eoy.EOYDonationsByContinent(res);
-});
+// app.get('/eoy/donationsbycontinent', function(req, res) {
+//   eoy.EOYDonationsByContinent(res);
+// });
 
-app.get('/eoy/donationsbysource', function(req, res) {
-  eoy.EOYDonationsBySource(res);
-});
+// app.get('/eoy/donationsbysource', function(req, res) {
+//   eoy.EOYDonationsBySource(res);
+// });
 
-app.get('/eoy/transactionsbycountry', function(req, res) {
-  eoy.EOYTransactionsByCountry(res);
-});
+// app.get('/eoy/transactionsbycountry', function(req, res) {
+//   eoy.EOYTransactionsByCountry(res);
+// });
 
-app.get('/eoy/transactionsbycontinent', function(req, res) {
-  eoy.EOYTransactionsByContinent(res);
-});
+// app.get('/eoy/transactionsbycontinent', function(req, res) {
+//   eoy.EOYTransactionsByContinent(res);
+// });
 
 app.get('/eoy/transactionsbysource', function(req, res) {
   eoy.EOYTransactionsBySource(res);
@@ -151,5 +151,5 @@ setInterval(appmaker.refreshStats, process.env.UPDATE_FREQUENCY_MINS * 60 * 1000
 // Run this once right away
 appmaker.refreshStats();
 // Periodically update the GA Stats
-// setInterval(ga.getLatestData, process.env.UPDATE_FREQUENCY_MINS * 60 * 1000);
-// ga.getLatestData();
+setInterval(ga.getLatestData, process.env.UPDATE_FREQUENCY_MINS * 60 * 1000);
+ga.getLatestData();
