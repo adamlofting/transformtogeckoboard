@@ -14,5 +14,5 @@ visit `http://transformtogeckoboard.herokuapp.com/ga/auth`
 #### Local
 
 ```
-foreman run web
+heroku local web
 ```

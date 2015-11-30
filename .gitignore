@@ -25,6 +25,7 @@ build/Release
 node_modules
 
 .env
+.DS_Store
 
 generated/*
 !generated/justforgit.txt
