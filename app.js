@@ -95,6 +95,10 @@ app.get('/eoy/transactionsbysource', function(req, res) {
   eoy.EOYTransactionsBySource(res);
 });
 
+app.get('/eoy/transactionsbylanguage', function(req, res) {
+  eoy.EOYTransactionsByLanguage(res);
+});
+
 
 
 // AUTH LOCAL
